@@ -34,3 +34,58 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* ============================================
+   AJUSTES RESPONSIVE
+   ============================================ */
+
+.constancia-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+
+/* ============================================
+   CELULAR
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 12px;
+    }
+
+    /* Panel de control */
+    .no-print {
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+    .no-print h2 {
+        font-size: 1.25rem;
+    }
+
+    /* El grid del panel ya pasa a una columna
+       gracias a Tailwind */
+
+    .no-print .grid {
+        gap: 16px;
+    }
+
+    /* Firma: una sola columna en celular */
+    .no-print .grid.grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contenedor de la constancia */
+    .constancia-wrapper {
+        justify-content: flex-start;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+}

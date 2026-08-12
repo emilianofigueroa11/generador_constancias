@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="bg-slate-100 p-6 flex flex-col items-center min-h-screen">
+<body class="bg-slate-100 p-6 flex flex-col items-center min-h-screen overflow-x-hidden">
 
     <!-- PANEL DE CONTROL (Oculto al imprimir/generar PDF) -->
     <div class="no-print bg-white p-6 rounded-xl shadow-lg mb-8 w-full max-w-5xl border-t-4 border-teal-600">
@@ -216,6 +216,7 @@
 
 
     <!-- ÁREA DE LA CONSTANCIA (Lienzo para PDF) -->
+<div class="constancia-wrapper">
     <div
         id="constancia-container"
         class="bg-white relative shadow-2xl text-gray-800 mx-auto flex flex-col overflow-hidden"
@@ -424,7 +425,7 @@
         </div>
 
     </div>
-
+</div>
 
     <!-- JavaScript -->
     <script src="js/script.js"></script>
