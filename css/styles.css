@@ -7,7 +7,10 @@ body {
 }
 
 
-/* Estilos de impresión */
+/* ============================================
+   ESTILOS DE IMPRESIÓN
+============================================ */
+
 @media print {
 
     .no-print {
@@ -25,18 +28,21 @@ body {
         margin: 0;
         transform: scale(1);
     }
-
 }
 
 
-/* Clase para textos que necesitan ajuste óptico */
+/* ============================================
+   TEXTO
+============================================ */
+
 .text-shadow-sm {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+
 /* ============================================
-   AJUSTES RESPONSIVE
-   ============================================ */
+   CONTENEDOR RESPONSIVE
+============================================ */
 
 .constancia-wrapper {
     width: 100%;
@@ -49,8 +55,120 @@ body {
 
 
 /* ============================================
+   ESTRUCTURA FIJA DE LA CONSTANCIA
+============================================ */
+
+/*
+   IMPORTANTE:
+
+   Antes el main utilizaba justify-center junto
+   con flex-grow.
+
+   Eso permitía que el contenido se redistribuyera
+   verticalmente dependiendo del tamaño del nombre.
+
+   Ahora dejamos posiciones mucho más estables.
+*/
+
+#constancia-container {
+    flex-shrink: 0;
+}
+
+
+/* Área principal */
+
+.constancia-main {
+    flex: 1;
+    justify-content: center;
+
+    /*
+       Evita que el contenido se salga
+       horizontalmente.
+    */
+    width: 100%;
+}
+
+
+/* ============================================
+   NOMBRE DEL PARTICIPANTE
+============================================ */
+
+/*
+   Reservamos un espacio fijo para el nombre.
+
+   De esta forma la línea inferior no sube
+   ni baja dependiendo del texto.
+*/
+
+.nombre-container {
+    height: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-bottom: 5px;
+
+    flex-shrink: 0;
+
+    position: relative;
+    z-index: 50;
+}
+
+
+/*
+   Nombre normal
+*/
+
+.nombre-text {
+    font-size: 2.25rem;
+    line-height: 1.15;
+
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: ellipsis;
+
+    max-width: 100%;
+
+    position: relative;
+    z-index: 51;
+}
+
+
+/* ============================================
+   FOOTER
+============================================ */
+
+/*
+   Reservamos una altura estable para la firma.
+*/
+
+.constancia-footer {
+    flex-shrink: 0;
+    min-height: 145px;
+}
+
+
+/* ============================================
+   NOMBRES LARGOS
+============================================ */
+
+.nombre-largo {
+    font-size: 1.9rem !important;
+}
+
+.nombre-muy-largo {
+    font-size: 1.6rem !important;
+}
+
+.nombre-extremo {
+    font-size: 1.4rem !important;
+}
+
+
+/* ============================================
    CELULAR
-   ============================================ */
+============================================ */
 
 @media (max-width: 768px) {
 
@@ -58,34 +176,51 @@ body {
         padding: 12px;
     }
 
-    /* Panel de control */
+
+    /* Panel */
+
     .no-print {
         padding: 16px;
         margin-bottom: 20px;
     }
 
+
     .no-print h2 {
         font-size: 1.25rem;
     }
 
-    /* El grid del panel ya pasa a una columna
-       gracias a Tailwind */
 
     .no-print .grid {
         gap: 16px;
     }
 
-    /* Firma: una sola columna en celular */
+
+    /* Firma en una columna */
+
     .no-print .grid.grid-cols-2 {
         grid-template-columns: 1fr;
     }
 
-    /* Contenedor de la constancia */
+
+    /* Constancia */
+
     .constancia-wrapper {
         justify-content: flex-start;
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+    }
+
+
+    /*
+       En celular no reducimos la constancia.
+
+       Sigue siendo una hoja A4 horizontal.
+       Simplemente se desplaza horizontalmente.
+    */
+
+    #constancia-container {
+        flex-shrink: 0;
     }
 
 }

@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Generador de Constancias</title>
-    <meta name="description" content="Generador de constancias de participación de la Secretaría de Salud del Estado de Jalisco.">
+
+    <meta name="description"
+        content="Generador de constancias de participación de la Secretaría de Salud del Estado de Jalisco.">
 
     <meta property="og:title" content="Generador de Constancias">
-    <meta property="og:description" content="Generador de constancias de participación de la Secretaría de Salud del Estado de Jalisco.">
+    <meta property="og:description"
+        content="Generador de constancias de participación de la Secretaría de Salud del Estado de Jalisco.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://generador-constancias.vercel.app/">
-    <meta property="og:image" content="https://generador-constancias.vercel.app/img/logo.png">
+    <meta property="og:image"
+        content="https://generador-constancias.vercel.app/img/logo.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Fuentes -->
@@ -29,43 +35,67 @@
 
 <body class="bg-slate-100 p-6 flex flex-col items-center min-h-screen overflow-x-hidden">
 
-    <!-- PANEL DE CONTROL (Oculto al imprimir/generar PDF) -->
+    <!-- ============================================
+         PANEL DE CONTROL
+    ============================================ -->
+
     <div class="no-print bg-white p-6 rounded-xl shadow-lg mb-8 w-full max-w-5xl border-t-4 border-teal-600">
 
         <div class="flex justify-between items-center mb-6 border-b pb-4">
+
             <h2 class="text-2xl font-bold text-gray-800">
                 Generador de Constancias
             </h2>
-            <!-- Poner aqui el logo de la secretaria ???-->
+
             <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-semibold">
-                <img src="img/logo.png" alt="Logo secretaria de salud"
-                    class="h-8 w-auto object-contain inline-block mr-2">
+
+                <img
+                    src="img/logo.png"
+                    alt="Logo secretaria de salud"
+                    class="h-8 w-auto object-contain inline-block mr-2"
+                >
+
             </span>
+
         </div>
+
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <!-- Columna Izquierda: Datos del Participante y Evento Principal -->
+            <!-- Columna izquierda -->
             <div class="space-y-4">
 
+                <!-- Nombre -->
                 <div>
+
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
                         Nombre del Participante
                     </label>
 
-                    <input type="text" id="inputNombre"
+                    <input
+                        type="text"
+                        id="inputNombre"
                         class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 outline-none transition"
-                        placeholder="Ej. Dra. María González" oninput="actualizarConstancia()">
+                        placeholder="Ej. Dra. María González"
+                        oninput="actualizarConstancia()"
+                    >
+
                 </div>
 
+
+                <!-- Rol -->
                 <div>
+
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
                         Rol / Tipo de Participación
                     </label>
 
-                    <select id="inputRol"
+                    <select
+                        id="inputRol"
                         class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 outline-none bg-white transition"
-                        onchange="actualizarConstancia()">
+                        onchange="actualizarConstancia()"
+                    >
+
                         <option value="su valiosa participación como ASISTENTE">
                             ASISTENTE
                         </option>
@@ -81,37 +111,52 @@
                         <option value="su participación como MODERADOR">
                             MODERADOR
                         </option>
+
                     </select>
+
                 </div>
 
+
+                <!-- Evento -->
                 <div>
+
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
                         Nombre del Evento
                     </label>
 
-                    <textarea id="inputEvento" rows="3"
+                    <textarea
+                        id="inputEvento"
+                        rows="3"
                         class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 outline-none transition resize-none text-sm"
-                        oninput="actualizarConstancia()">Taller: Introducción a los Buenos Ensayos Clínicos, utilizando la Guía del GCTC</textarea>
+                        oninput="actualizarConstancia()"
+                    >Taller: Introducción a los Buenos Ensayos Clínicos, utilizando la Guía del GCTC</textarea>
+
                 </div>
 
             </div>
 
 
-            <!-- Columna Derecha: Detalles, Firmas y LOGOS -->
+            <!-- Columna derecha -->
             <div class="space-y-4">
 
+                <!-- Detalles -->
                 <div>
+
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
                         Detalles (Fecha y Lugar)
                     </label>
 
-                    <textarea id="inputDetalles" rows="2"
+                    <textarea
+                        id="inputDetalles"
+                        rows="2"
                         class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 outline-none transition resize-none text-sm"
-                        oninput="actualizarConstancia()">Realizado los días 25 y 26 de noviembre de 2024 en la Biblioteca Pública del Estado de Jalisco "Juan José Arreola", Zapopan, México.</textarea>
+                        oninput="actualizarConstancia()"
+                    >Realizado los días 25 y 26 de noviembre de 2024 en la Biblioteca Pública del Estado de Jalisco "Juan José Arreola", Zapopan, México.</textarea>
+
                 </div>
 
 
-                <!-- Configuración de Imágenes -->
+                <!-- Firma -->
                 <div class="space-y-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
 
                     <h3 class="font-bold text-gray-700 text-sm border-b pb-2 mb-2">
@@ -119,57 +164,88 @@
                     </h3>
 
 
-                    <!-- Datos Firma -->
                     <div class="grid grid-cols-2 gap-2 mt-2">
 
                         <div>
+
                             <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">
                                 Nombre Firmante
                             </label>
 
-                            <input type="text" id="inputFirmaNombre" value="Dr. Netzahualpilli Delgado Figueroa"
+                            <input
+                                type="text"
+                                id="inputFirmaNombre"
+                                value="Dr. Netzahualpilli Delgado Figueroa"
                                 class="w-full border border-gray-300 rounded-lg p-1 text-xs"
-                                oninput="actualizarConstancia()">
+                                oninput="actualizarConstancia()"
+                            >
+
                         </div>
 
+
                         <div>
+
                             <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">
                                 Cargo
                             </label>
 
-                            <input type="text" id="inputFirmaCargo" value="Coordinador Prism TGHN LAC"
+                            <input
+                                type="text"
+                                id="inputFirmaCargo"
+                                value="Coordinador Prism TGHN LAC"
                                 class="w-full border border-gray-300 rounded-lg p-1 text-xs"
-                                oninput="actualizarConstancia()">
+                                oninput="actualizarConstancia()"
+                            >
+
                         </div>
 
                     </div>
 
 
-                    <!-- Subir Imagen de Firma -->
+                    <!-- Imagen firma -->
                     <div class="mt-2">
 
                         <label class="block text-[10px] font-bold text-teal-600 uppercase tracking-wide mb-1">
                             Subir Imagen de Firma (PNG)
                         </label>
 
-                        <input type="file" id="inputFirmaImg" accept="image/*"
+                        <input
+                            type="file"
+                            id="inputFirmaImg"
+                            accept="image/*"
                             class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 cursor-pointer"
-                            onchange="cargarFirma(event)">
+                            onchange="cargarFirma(event)"
+                        >
 
                     </div>
 
                 </div>
 
 
+                <!-- Botón -->
                 <div class="flex items-end mt-2">
 
-                    <button onclick="descargarPDF()" id="btnDownload"
-                        class="w-full bg-gradient-to-r from-blue-900 to-teal-700 hover:from-blue-800 hover:to-teal-600 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-200 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                    <button
+                        onclick="descargarPDF()"
+                        id="btnDownload"
+                        class="w-full bg-gradient-to-r from-blue-900 to-teal-700 hover:from-blue-800 hover:to-teal-600 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-200 flex items-center justify-center gap-2 transform hover:-translate-y-0.5"
+                    >
 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+
                         </svg>
 
                         Descargar PDF
@@ -185,59 +261,57 @@
     </div>
 
 
-    <!-- ÁREA DE LA CONSTANCIA (Lienzo para PDF) -->
+    <!-- ============================================
+         CONSTANCIA
+    ============================================ -->
+
     <div class="constancia-wrapper">
-        <div id="constancia-container"
+
+        <div
+            id="constancia-container"
             class="bg-white relative shadow-2xl text-gray-800 mx-auto flex flex-col overflow-hidden"
-            style="width: 1123px; height: 794px; min-width: 1123px; min-height: 794px;">
+            style="
+                width: 1123px;
+                height: 794px;
+                min-width: 1123px;
+                min-height: 794px;
+            "
+        >
 
-            <!-- Elementos Gráficos de Fondo -->
-            <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-blue-900 via-teal-500 to-blue-900 z-20">
-            </div>
+            <!-- Barras -->
+            <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-blue-900 via-teal-500 to-blue-900 z-20"></div>
 
-            <div
-                class="absolute bottom-0 left-0 w-full h-5 bg-gradient-to-r from-blue-900 via-teal-500 to-blue-900 z-20">
-            </div>
+            <div class="absolute bottom-0 left-0 w-full h-5 bg-gradient-to-r from-blue-900 via-teal-500 to-blue-900 z-20"></div>
 
 
-
-
-
-            <!-- Marco Decorativo -->
+            <!-- Marco -->
             <div class="absolute top-6 left-6 right-6 bottom-8 border border-gray-200 z-10 pointer-events-none"></div>
 
 
-            <!-- CONTENIDO PRINCIPAL -->
-            <div class="relative z-30 h-full flex flex-col justify-between px-12 pt-8 pb-10">
+            <!-- CONTENIDO -->
+            <div class="relative z-30 h-full flex flex-col px-12 pt-8 pb-10">
 
 
-                <!-- 1. HEADER (Logos) -->
-                <header class="flex justify-between items-start mb-2">
+                <!-- HEADER -->
+                <header class="flex justify-between items-start">
 
-                    <!-- Izquierda: Bloque Académico -->
                     <div class="flex items-center gap-6 mt-2">
 
-                        <img src="img/logo.png" alt="Logo secretaria de salud" class="h-24 w-auto object-contain">
-
-
-
-                    </div>
-
-
-                    <!-- Derecha: TGHN -->
-                    <div class="flex items-center mt-1">
-
-                        <img id="logoTGHN"
-                            src="https://upload.wikimedia.org/wikipedia/commons/f/f6/The_Global_Health_Network_LatinAmerica_Logo.png"
-                            onerror="this.src='https://media.tghn.org/medialibrary/2020/06/TGHN_Logo_Blue_RGB_1.png'"
-                            alt="Logo TGHN LAC" class="h-28 w-auto object-contain">
+                        <img
+                            src="img/logo.png"
+                            alt="Logo secretaria de salud"
+                            class="h-24 w-auto object-contain"
+                        >
 
                     </div>
+
+
+
 
                 </header>
 
 
-                <!-- 2. TÍTULOS -->
+                <!-- TÍTULOS -->
                 <div class="text-center mt-4">
 
                     <h1 class="text-lg font-bold text-gray-500 tracking-[0.2em] uppercase font-serif-title">
@@ -246,15 +320,11 @@
 
 
 
-                    <h3 class="text-base font-bold text-teal-700 tracking-wide uppercase">
-                        The Global Health Network Latin America & The Caribbean
-                    </h3>
-
                 </div>
 
 
-                <!-- 3. CUERPO -->
-                <main class="flex-grow flex flex-col justify-center items-center text-center">
+                <!-- CUERPO -->
+                <main class="constancia-main flex flex-col items-center text-center">
 
                     <p class="text-base text-gray-500 italic mb-1 font-light">
                         Otorgan la presente
@@ -269,23 +339,30 @@
                     </p>
 
 
-                    <!-- Nombre Participante -->
-                    <div class="relative mb-4 w-full max-w-4xl border-b-2 border-gray-300 pb-1">
+                    <!-- NOMBRE -->
+                    <div class="nombre-container relative w-full max-w-4xl">
 
-                        <h3 id="displayNombre" class="text-4xl font-bold text-gray-800 w-full font-serif-title">
+                        <h3
+                            id="displayNombre"
+                            class="font-bold text-gray-800 w-full font-serif-title nombre-text"
+                        >
                             Nombre del Participante
                         </h3>
 
                     </div>
 
 
-                    <!-- Texto Descriptivo -->
-                    <div class="max-w-5xl mx-auto space-y-2">
+                    <!-- TEXTO -->
+                    <div class="max-w-5xl mx-auto space-y-2 mt-4">
 
                         <p class="text-xl text-gray-700 leading-relaxed font-light">
 
                             Por
-                            <span id="displayRol" class="font-bold text-teal-800">
+
+                            <span
+                                id="displayRol"
+                                class="font-bold text-teal-800"
+                            >
                                 su participación
                             </span>
 
@@ -300,7 +377,10 @@
                                 “
                             </span>
 
-                            <h4 id="displayEvento" class="text-2xl font-bold text-blue-900 leading-tight px-4">
+                            <h4
+                                id="displayEvento"
+                                class="text-2xl font-bold text-blue-900 leading-tight px-4"
+                            >
                                 Taller: Introducción a los Buenos Ensayos Clínicos, utilizando la Guía del GCTC
                             </h4>
 
@@ -311,9 +391,11 @@
                         </div>
 
 
-                        <p id="displayDetalles" class="text-base text-gray-600 mt-3 px-12 leading-relaxed">
-                            Realizado los días 25 y 26 de noviembre de 2024 en la Biblioteca Pública del Estado de
-                            Jalisco "Juan José Arreola", Zapopan, México.
+                        <p
+                            id="displayDetalles"
+                            class="text-base text-gray-600 mt-3 px-12 leading-relaxed"
+                        >
+                            Realizado los días 25 y 26 de noviembre de 2024 en la Biblioteca Pública del Estado de Jalisco "Juan José Arreola", Zapopan, México.
                         </p>
 
                     </div>
@@ -321,18 +403,20 @@
                 </main>
 
 
-                <!-- 4. FOOTER: Firma -->
-                <footer class="mt-4 flex flex-col items-center justify-end w-full relative z-40">
+                <!-- FOOTER -->
+                <footer class="constancia-footer flex flex-col items-center justify-end w-full relative z-40">
 
-                    <!-- Contenedor Firma + Nombre -->
                     <div class="flex flex-col items-center justify-end relative">
 
-                        <!-- Imagen Firma -->
+                        <!-- Firma -->
                         <div class="h-20 w-64 flex items-end justify-center mb-1">
 
-                            <img id="displayImgFirma"
+                            <img
+                                id="displayImgFirma"
                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                class="max-h-full max-w-full object-contain" alt="">
+                                class="max-h-full max-w-full object-contain"
+                                alt=""
+                            >
 
                         </div>
 
@@ -341,37 +425,36 @@
                         <div class="w-80 h-0.5 bg-gray-900 mb-2"></div>
 
 
-                        <!-- Textos -->
-                        <p id="displayFirmaNombre"
-                            class="font-bold text-gray-950 text-lg font-serif-title tracking-tight text-center">
+                        <!-- Datos -->
+                        <p
+                            id="displayFirmaNombre"
+                            class="font-bold text-gray-950 text-lg font-serif-title tracking-tight text-center"
+                        >
                             Dr. Netzahualpilli Delgado Figueroa
                         </p>
 
-                        <p id="displayFirmaCargo"
-                            class="text-sm text-gray-700 font-bold uppercase tracking-wide text-center">
+
+                        <p
+                            id="displayFirmaCargo"
+                            class="text-sm text-gray-700 font-bold uppercase tracking-wide text-center"
+                        >
                             Coordinador Prism TGHN LAC
                         </p>
 
-                        <p class="text-xs text-gray-500 mt-0.5 text-center">
-                            The Global Health Network
-                        </p>
 
                     </div>
 
 
-                    <!-- Lema -->
-                    <div class="mt-6">
-
-
-
-                    </div>
+                    <div class="mt-6"></div>
 
                 </footer>
 
             </div>
 
         </div>
+
     </div>
+
 
     <!-- JavaScript -->
     <script src="js/script.js"></script>

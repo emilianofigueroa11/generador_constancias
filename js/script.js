@@ -13,16 +13,14 @@ function cargarFirma(event) {
 
         const reader = new FileReader();
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             document.getElementById('displayImgFirma').src = e.target.result;
 
-        }
+        };
 
         reader.readAsDataURL(input.files[0]);
-
     }
-
 }
 
 
@@ -32,7 +30,10 @@ function cargarFirma(event) {
 
 function actualizarConstancia() {
 
-    // Inputs
+    // ========================================
+    // INPUTS
+    // ========================================
+
     const nombre = document.getElementById('inputNombre').value;
     const rol = document.getElementById('inputRol').value;
     const evento = document.getElementById('inputEvento').value;
@@ -41,12 +42,19 @@ function actualizarConstancia() {
     const fCargo = document.getElementById('inputFirmaCargo').value;
 
 
-    // Displays
+    // ========================================
+    // ELEMENTOS DE LA CONSTANCIA
+    // ========================================
+
     const displayNombre = document.getElementById('displayNombre');
 
 
-    // Actualizar textos
-    displayNombre.textContent = nombre || "Nombre del Participante";
+    // ========================================
+    // ACTUALIZAR TEXTOS
+    // ========================================
+
+    displayNombre.textContent =
+        nombre || "Nombre del Participante";
 
     document.getElementById('displayRol').textContent = rol;
 
@@ -59,20 +67,74 @@ function actualizarConstancia() {
     document.getElementById('displayFirmaCargo').textContent = fCargo;
 
 
-    // Ajustar tamaño de fuente dinámico
-    if (nombre.length > 35) {
+    // ========================================
+    // AJUSTE DEL NOMBRE
+    // ========================================
 
-        displayNombre.classList.remove('text-4xl');
+    /*
+       Primero eliminamos cualquier clase
+       anterior.
+    */
 
-        displayNombre.classList.add('text-2xl');
+    displayNombre.classList.remove(
+        'nombre-largo',
+        'nombre-muy-largo',
+        'nombre-extremo'
+    );
 
-    } else {
 
-        displayNombre.classList.remove('text-2xl');
+    /*
+       Ahora hacemos ajustes graduales.
 
-        displayNombre.classList.add('text-4xl');
+       Ya no tenemos el salto brusco:
+
+       35 caracteres
+       4xl -> 2xl
+
+       Ahora existen varios niveles.
+    */
+
+    if (nombre.length > 50) {
+
+        displayNombre.classList.add('nombre-extremo');
 
     }
+
+    else if (nombre.length > 40) {
+
+        displayNombre.classList.add('nombre-muy-largo');
+
+    }
+
+    else if (nombre.length > 30) {
+
+        displayNombre.classList.add('nombre-largo');
+
+    }
+
+}
+
+
+// ============================================
+// ESPERAR A QUE EL NAVEGADOR TERMINE DE
+// RENDERIZAR
+// ============================================
+
+function esperarRenderizado() {
+
+    return new Promise(resolve => {
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                resolve();
+
+            });
+
+        });
+
+    });
 
 }
 
@@ -81,63 +143,137 @@ function actualizarConstancia() {
 // DESCARGAR PDF
 // ============================================
 
-function descargarPDF() {
+async function descargarPDF() {
 
     const btn = document.getElementById('btnDownload');
 
     const originalText = btn.innerHTML;
 
 
+    // ========================================
+    // DESACTIVAR BOTÓN
+    // ========================================
+
     btn.disabled = true;
 
     btn.innerHTML = `Generando...`;
 
-    btn.classList.add('opacity-75', 'cursor-not-allowed');
+    btn.classList.add(
+        'opacity-75',
+        'cursor-not-allowed'
+    );
 
 
-    const elemento = document.getElementById('constancia-container');
+    try {
+
+        const elemento =
+            document.getElementById('constancia-container');
 
 
-    html2canvas(elemento, {
+        // ====================================
+        // ESPERAR A QUE LAS FUENTES TERMINEN
+        // ====================================
 
-        scale: 2,
+        if (document.fonts && document.fonts.ready) {
 
-        useCORS: true,
+            await document.fonts.ready;
 
-        allowTaint: true,
-
-        backgroundColor: '#ffffff',
-
-        logging: false
-
-    })
-
-    .then(canvas => {
-
-        const imgData = canvas.toDataURL('image/png');
+        }
 
 
-        const pdf = new jsPDF({
-            orientation: 'landscape',
-            unit: 'mm',
-            format: 'a4'
+        // ====================================
+        // ESPERAR RENDERIZADO
+        // ====================================
+
+        await esperarRenderizado();
+
+
+        // ====================================
+        // GENERAR CANVAS
+        // ====================================
+
+        const canvas = await html2canvas(elemento, {
+
+            scale: 2,
+
+            useCORS: true,
+
+            allowTaint: true,
+
+            backgroundColor: '#ffffff',
+
+            logging: false,
+
+            /*
+               Mantener exactamente las dimensiones
+               de la constancia.
+            */
+
+            width: 1123,
+
+            height: 794,
+
+            windowWidth: 1123,
+
+            windowHeight: 794
+
         });
 
 
-        const pdfWidth = pdf.internal.pageSize.getWidth();
+        // ====================================
+        // CONVERTIR A IMAGEN
+        // ====================================
 
-        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgData =
+            canvas.toDataURL('image/png');
 
+
+        // ====================================
+        // CREAR PDF A4 HORIZONTAL
+        // ====================================
+
+        const pdf = new jsPDF({
+
+            orientation: 'landscape',
+
+            unit: 'mm',
+
+            format: 'a4'
+
+        });
+
+
+        const pdfWidth =
+            pdf.internal.pageSize.getWidth();
+
+        const pdfHeight =
+            pdf.internal.pageSize.getHeight();
+
+
+        // ====================================
+        // INSERTAR IMAGEN
+        // ====================================
 
         pdf.addImage(
+
             imgData,
+
             'PNG',
+
             0,
+
             0,
+
             pdfWidth,
+
             pdfHeight
+
         );
 
+
+        // ====================================
+        // NOMBRE DEL ARCHIVO
+        // ====================================
 
         let nombreArchivo =
             document.getElementById('inputNombre').value ||
@@ -145,29 +281,48 @@ function descargarPDF() {
 
 
         nombreArchivo = nombreArchivo
+
+            .normalize("NFD")
+
+            .replace(/[\u0300-\u036f]/g, "")
+
             .replace(/[^a-z0-9]/gi, '_')
+
+            .replace(/_+/g, '_')
+
             .toLowerCase();
 
 
-        pdf.save(`Constancia_GCTC_${nombreArchivo}.pdf`);
+        // ====================================
+        // GUARDAR PDF
+        // ====================================
+
+        pdf.save(
+            `Constancia_GCTC_${nombreArchivo}.pdf`
+        );
 
 
-        restaurarBoton(btn, originalText);
+    }
 
-    })
-
-    .catch(err => {
+    catch (err) {
 
         console.error("Error:", err);
 
         alert(
-            "Hubo un error al generar el PDF. Verifica tu conexión de internet para cargar los logos."
+            "Hubo un error al generar el PDF. Verifica tu conexión a internet para cargar los logos."
         );
 
+    }
 
-        restaurarBoton(btn, originalText);
 
-    });
+    // ========================================
+    // RESTAURAR BOTÓN
+    // ========================================
+
+    restaurarBoton(
+        btn,
+        originalText
+    );
 
 }
 
@@ -194,4 +349,8 @@ function restaurarBoton(btn, textoOriginal) {
 // AL CARGAR LA PÁGINA
 // ============================================
 
-window.onload = actualizarConstancia;
+window.onload = function () {
+
+    actualizarConstancia();
+
+};
